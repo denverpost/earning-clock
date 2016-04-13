@@ -240,13 +240,7 @@ var timer = {
     },
     update: function() {
         this.time_since = this.calc_time_since();
-        // We can do this because the dollar amount isn't advancing any more than
-        // a dollar at a time.
-        //var earned = this.calc_salary_earned(); 
-        //if ( this.salary_earned != earned ) { clock.start(); clock.stop(); }
-        //this.salary_earned = earned;
         $('#salary').text(this.add_commas(this.calc_salary_earned_decimal()));
-        //console.log(this.time_since, this.salary_earned);
     },
     seconds_per_year: 31536000,
     seconds_per_season: 15811200,
@@ -256,10 +250,9 @@ var timer = {
         this.salary_per_second = this.salary/this.seconds_per_season;
         this.salary_earned = this.calc_salary_earned();
         $('#salary').text(this.calc_salary_earned_decimal());
-        //clock.setTime(this.salary_earned);
         var updater = setInterval(function(){
             timer.update();
-        },100);
+        },1000);
     }
 }
 timer.init();
