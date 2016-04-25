@@ -192,7 +192,7 @@
 <p>The Rockies have paid Reyes:</p>
 <h2>$<span id="salary"></span></h2>
 <p>of Reyes' $22,000,000 salary since the start of the 2016 MLB season.</p>
-
+<p>This is <strong id="percent">0.0%</strong> of the Rockies' $114M 2016 payroll.</p>
 <hr noshade>
 <div style="margin-bottom:10px;" class="fb-like" data-href="http://extras.denverpost.com/app/earning-clock/jose-reyes/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
 
@@ -218,6 +218,7 @@ clock.stop();
 var timer = {
     tz_offset: -6,
     salary: 22000000,
+    payroll: 114257571,
     time_from: 'April 3 2016 00:00:00 GMT-06:00',
     calc_time_zone: function(offset) {
         // Get the current time in a different timezone. Must know the tz offset,
@@ -235,12 +236,16 @@ var timer = {
     calc_salary_earned_decimal: function() {
         return Math.round((this.time_since * this.salary_per_second)*100)/100;
     },
+    calc_payroll_percent_decimal: function() {
+        return (Math.round(((this.time_since * this.salary_per_second)/this.payroll)*10000000)/10000000)*100;
+    },
     add_commas: function(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
     update: function() {
         this.time_since = this.calc_time_since();
         $('#salary').text(this.add_commas(this.calc_salary_earned_decimal()));
+        $('#percent').text(this.calc_payroll_percent_decimal() + '%');
     },
     seconds_per_year: 31536000,
     seconds_per_season: 15811200,
