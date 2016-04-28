@@ -192,6 +192,7 @@
 <p>The Rockies have paid Reyes:</p>
 <h2>$<span id="salary"></span></h2>
 <p>of Reyes' $22,000,000 salary since the start of the 2016 MLB season.</p>
+<p>That means Reyes has been paid more for his time off than <span id="players">X</span> players (out of 35) being paid by the Rockies will earn all season.</p>
 <p>This is <strong id="percent">0.0%</strong> of the Rockies' $114M 2016 payroll.</p>
 <hr noshade>
 <div style="margin-bottom:10px;" class="fb-like" data-href="http://extras.denverpost.com/app/earning-clock/jose-reyes/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
@@ -219,6 +220,7 @@ var timer = {
     tz_offset: -6,
     salary: 22000000,
     payroll: 114257571,
+    payrolls: [507500,507500,507500,507500,507500,509500,509500,509500,509500,509500,509500,509500,509500,512500,512500,512500,512500,1000000,1000000,1300000,1500000,2100000,2250000,2600000,2975000,3000000,3150000,3500000,4800000,5000000,5000000,6250000,8000000,12500000,17428571],
     time_from: 'April 3 2016 00:00:00 GMT-06:00',
     calc_time_zone: function(offset) {
         // Get the current time in a different timezone. Must know the tz offset,
@@ -244,7 +246,19 @@ var timer = {
     },
     update: function() {
         this.time_since = this.calc_time_since();
-        $('#salary').text(this.add_commas(this.calc_salary_earned_decimal()));
+        var earned = this.calc_salary_earned_decimal();
+        $('#salary').text(this.add_commas(earned));
+
+        var player_pay = this.payrolls[0];
+        var players_gt = 0;
+        var i = 1;
+        while ( earned > player_pay )
+        {
+            players_gt += 1;
+            player_pay = this.payrolls[i];
+            i += 1;
+        }
+        $('#players').text(players_gt);
         $('#percent').text(this.calc_payroll_percent_decimal() + '%');
     },
     seconds_per_year: 31536000,
