@@ -184,22 +184,25 @@
         <div class="row">
 
             <h1>Jose Reyes Salary-Per-Second Calculator</h1>
-            <h3>How much are the Colorado Rockies paying Jose Reyes per second to do nothing?</h3>
+            <h3>How much is the Colorado Rockies' Jose Reyes' suspension costing him?</h3>
             
 
             <div class="maincol small-12 large-9 columns">
-<p>Colorado Rockies shortstop Jose Reyes earns $1.39 each second this season.The highest-paid Rockies player was arrested in October 2015 for domestic violence, and until the MLB rules on his case he will continue to be on paid administrative leave.</p>
-<p>The Rockies have paid Reyes:</p>
+<p>Colorado Rockies shortstop Jose Reyes earns $1.39 each second this season. The highest-paid Rockies player was arrested in October 2015 for domestic violence, and was suspended without pay by the MLB until May 31.</p>
+<p>Reyes has forfeited:</p>
 <h2>$<span id="salary"></span></h2>
-<p>of Reyes' $22,000,000 salary since the start of the 2016 MLB season.</p>
-<p>That means Reyes has been paid more for his time off than <span id="players">X</span> players (out of 35) paid by the Rockies will earn all season.</p>
+<p>of Reyes' $22,000,000 salary.</p>
+<p>That means Reyes has lost more money during his suspension than <span id="players">X</span> players (out of 35) paid by the Rockies will earn all season.</p>
+<!--
 <p>This is <strong id="percent">0.0%</strong> of the Rockies' $114M 2016 payroll.</p>
+-->
 <hr noshade>
-<h3 id="you-earn">How Many Hours Does Jose Reyes Have To Do Nothing In Order To Earn More Than You Will Earn All Year?</h3>
-<p>Type in how much money you make in a year and see how long Jose Reyes took to earn that.</p>
+<!--
+<h3 id="you-earn">How many hours does Jose Reyes have to do nothing in order to earn more than you will earn all year?</h3>
+<p>Type in how much money you make in a year and see how long Jose Reyes took to earn that while on paid administrative leave.</p>
 <p><label for="salary">Your earnings: <input type="text" name="your-salary" id="your-salary" value="" maxlength="50" onChange="timer.compare(this);"></label></p>
-<p>Jose Reyes spent <span id="hours_until">0</span> hours, <span id="minutes_until">0</span> minutes and <span id="seconds_until">0</span> seconds this season earning what you make in a year.</p>
-
+<p id="you-earn-results">Jose Reyes spent <span id="hours_until">0</span> hours, <span id="minutes_until">0</span> minutes and <span id="seconds_until">0</span> seconds this season earning what you make in a year.</p>
+-->
 <hr noshade>
 <div style="margin-bottom:10px;" class="fb-like" data-href="http://extras.denverpost.com/app/earning-clock/jose-reyes/" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
 
@@ -252,7 +255,10 @@ var timer = {
     },
     compare: function(input) {
         // Compare salary to user-input salary.
-        var salary = +input.replace(/,/g, '');
+        // Because this javascript behaves differently in our articles than extras:
+        if ( typeof input === 'string' ) var salary = input.replace(/,/g, '');
+        else var salary = input.value.replace(/,/g, '');
+        salary = +salary;
         if ( salary > 0 )
         {
             var seconds_total = Math.round(salary/this.salary_per_second) + 1;
@@ -262,6 +268,7 @@ var timer = {
             $('#hours_until').text(hours_until);
             $('#minutes_until').text(minutes_until);
             $('#seconds_until').text(seconds_until);
+            $('#you-earn-results').css({'font-weight': 'bold', 'font-size': '16px'});
         }
     },
     update: function() {
